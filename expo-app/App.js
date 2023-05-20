@@ -1,35 +1,84 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Alert, Text } from "react-native";
-import { TextInput, Button } from "@react-native-material/core";
+import React, { useState } from 'react';
+import { StyleSheet, View, TextInput, Button, Alert } from 'react-native';
 
 const App = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [currentScreen, setCurrentScreen] = useState('login');
 
   const handleLogin = () => {
-    if (username === "admin" && password === "password") {
-      Alert.alert("Login successful!");
+    if (username === 'admin' && password === 'password') {
+      Alert.alert('Login Successful');
     } else {
-      Alert.alert("Invalid credentials");
+      Alert.alert('Invalid credentials');
     }
+  };
+
+  const handleRegister = () => {
+    setCurrentScreen('register');
+  };
+
+  const handleGoBack = () => {
+    setCurrentScreen('login');
   };
 
   return (
     <View style={styles.container}>
-      <TextInput
-        label="Username"
-        value={username}
-        onChangeText={(text) => setUsername(text)}
-        style={styles.input}
-      />
-      <TextInput
-        label="Password"
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-        secureTextEntry
-        style={styles.input}
-      />
-      <Button title="Login" style={styles.button} color="#009688" onPress={handleLogin} />
+      {currentScreen === 'login' ? (
+        <>
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            placeholderTextColor="white"
+            onChangeText={text => setUsername(text)}
+            value={username}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            placeholderTextColor="white"
+            secureTextEntry
+            onChangeText={text => setPassword(text)}
+            value={password}
+          />
+          <Button title="Login" onPress={handleLogin} style={styles.button} color="grey" />
+          <View style={styles.gap} />
+          <Button title="Register" onPress={handleRegister} style={styles.button} color="grey" />
+        </>
+      ) : (
+        <>
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            placeholderTextColor="white"
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            placeholderTextColor="white"
+            secureTextEntry
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Confirm Password"
+            placeholderTextColor="white"
+            secureTextEntry
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="First Name"
+            placeholderTextColor="white"
+            secureTextEntry
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Last Name"
+            placeholderTextColor="white"
+            secureTextEntry
+          />
+          <Button title="Register" onPress={handleGoBack} style={styles.button} color="grey" />
+        </>
+      )}
     </View>
   );
 };
@@ -37,21 +86,26 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16, 
+    backgroundColor: '#1d1d1b',
   },
   input: {
-    width: "100%",
+    width: '100%',
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
     marginBottom: 12,
+    paddingLeft: 10,
+    color: 'white',
   },
   button: {
-    width: "100%",
+    width: '100%',
     marginTop: 12,
   },
-  buttonText: {
-    color: "white",
-    fontWeight: "bold",
+  gap: {
+    height: 16,
   },
 });
 
